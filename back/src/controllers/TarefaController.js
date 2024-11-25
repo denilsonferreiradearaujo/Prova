@@ -26,4 +26,14 @@ export const TarefaController = {
       res.json({ message: error });
     }
   },
+
+  listarTarefas: async (req, res) => {
+    try {
+      const tarefas = await Tarefa.listarTarefas();
+      // console.log(users);
+      res.json({ tarefas });
+    } catch (error) {
+      res.json({ message: error });
+    }
+  },
 };
