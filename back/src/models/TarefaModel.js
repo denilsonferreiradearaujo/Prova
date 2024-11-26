@@ -34,7 +34,7 @@ class Tarefa {
     try {
       const conn = await connection();
       const [rows] =
-        await conn.query(`SELECT T.id_tarefa, T.id_usuario, T.descricao, T.equipe, T.prioridade, T.data_cadastro, T.status 
+        await conn.query(`SELECT T.id_tarefa, T.id_usuario, T.descricao, T.equipe, T.prioridade, T.data_cadastro, T.status, U.nome 
         FROM TAREFA T 
         INNER JOIN USUARIO U 
         ON T.id_usuario = U.id_usuario;`);
