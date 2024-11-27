@@ -49,11 +49,23 @@ export const TarefaController = {
     }
   },
 
-  deletarStatus: async (req, res) => {
+  deletarTarefa: async (req, res) => {
     try {
       const {id} = req.params;
-      const tarefas = await Tarefa.deletarStatus(id);
+      const tarefas = await Tarefa.deletarTarefa(id);
+      console.log("chegou aqui no tarefa controller deletar tarefa", tarefas)
       res.json({ tarefas });
+    } catch (error) {
+      res.json({ message: error });
+    }
+  },
+
+  listarTarefa: async (req, res) => {
+    try {
+      const {id} = req.params;
+      const tarefa = await Tarefa.listarTarefa(id);
+      console.log("chegou aqui no listar", tarefa);
+      res.json({ tarefa });
     } catch (error) {
       res.json({ message: error });
     }

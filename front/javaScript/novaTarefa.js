@@ -20,6 +20,28 @@ $(document).ready(function () {
       console.log(error);
     });
 
+
+  const taskId = sessionStorage.getItem("taskId");
+  console.log("editar tarefa", taskId);
+
+  if(taskId){
+    axios.get(`${localStorage.getItem("ipApi")}listarTarefa/${taskId}`)
+    .then(response => {
+      const tarefa = response.data.tarefa[0];
+      document.getElementById("descricao").value = tarefa.descricao;
+      document.getElementById("equipe").value = tarefa.equipe;
+
+      const nomeUserSelect = document.getElementById("nomeUser");
+      nomeUserSelect.value = tarefa.id_usuario;
+
+      const prioridadeSelect = document.getElementById("prioridade");
+      prioridadeSelect.value = tarefa.prioridade;
+    }).catch(error =>{
+
+    })
+  }
+
+
   $(document).off("submit", "#formNovaTarefa");
   $(document).on("submit", "#formNovaTarefa", async function (event) {
     event.preventDefault();
@@ -37,7 +59,7 @@ $(document).ready(function () {
       .post(`${localStorage.getItem("ipApi")}novaTarefa`, formData)
       .then((response) => {
         console.log(response.data);
-        alert('Tarefa Cadastrada com sucesso:' ,response.data)
+        alert('Tarefa Cadastrada com sucesso:', response.data)
       })
       .catch((error) => {
         console.log(error);

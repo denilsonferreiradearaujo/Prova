@@ -74,4 +74,34 @@ $(document).ready(async function () {
       
     }
   })
+
+  await deletarTarefa();
+
+  $(document).off('click', '.btn-delete');
+  $(document).on('click', '.btn-delete', async function (event) {
+    const taskId = $(this).data('id');
+    const newStatus = $(`.status-dropdown[data-id='${taskId}']`).val();
+
+    try {
+      await axios.delete(`${localStorage.getItem('ipApi')}deletarTarefa/${taskId}`, {status: newStatus})
+      .then(response =>{
+        alert("Tarefa excluida")
+      }).catch(error =>{
+
+      })
+      await deletarTarefa();
+    } catch (error) {
+      console.error("Erro ao deletar tarefa", error)
+      
+    }
+  })
+
+  $(document).off('click', '.btn-edit');
+  $(document).on('click', '.btn-edit', async function (event) {
+    const taskId = $(this).data('id');
+    sessionStorage.setItem("taskId", taskId);
+
+    console.log(taskId);
+  })
+
 });

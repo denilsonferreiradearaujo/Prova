@@ -59,15 +59,32 @@ class Tarefa {
     }
   }
 
-  static async deletarStatus(id) {
+  static async deletarTarefa(id) {
     try {
       const conn = await connection();
       const pSql = `DELETE FROM TAREFA WHERE id_tarefa=?`;
       const pValues = [id];
       const [result] = await conn.query(pSql, pValues);
+      console.log("Chegou aqui no Model",result);
       return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-      // console.log(result);
+  static async listarTarefa(id_tarefa) {
+    try {
+      const conn = await connection();
+      const [rows] = await conn.query(
+        `SELECT T.id_tarefa, T.id_usuario, T.descricao, T.equipe, T.prioridade, T.data_cadastro, T.status, U.nome 
+         FROM TAREFA T 
+         INNER JOIN USUARIO U 
+         ON T.id_usuario = U.id_usuario 
+         WHERE T.id_tarefa = ?;`, // Corrigi o identificador para coincidir com a tabela
+        [id_tarefa] // Corrigi a estrutura para usar o parâmetro corretamente
+      );
+      // console.log(rows);
+      return rows;
     } catch (error) {
       throw error;
     }
