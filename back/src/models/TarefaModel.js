@@ -22,7 +22,7 @@ class Tarefa {
         this.status,
       ];
       const [result] = await conn.query(pSql, pValues);
-      console.log(result);
+      // console.log(result);
 
       return result;
     } catch (error) {
@@ -38,8 +38,36 @@ class Tarefa {
         FROM TAREFA T 
         INNER JOIN USUARIO U 
         ON T.id_usuario = U.id_usuario;`);
-        console.log(rows);
+        // console.log(rows);
       return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async atualizarStatus(id, status) {
+    try {
+      const conn = await connection();
+      const pSql = `UPDATE TAREFA SET status=? WHERE id_tarefa=?;`;
+      const pValues = [status, id];
+      const [result] = await conn.query(pSql, pValues);
+      return result;
+
+      // console.log(result);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deletarStatus(id) {
+    try {
+      const conn = await connection();
+      const pSql = `DELETE FROM TAREFA WHERE id_tarefa=?`;
+      const pValues = [id];
+      const [result] = await conn.query(pSql, pValues);
+      return result;
+
+      // console.log(result);
     } catch (error) {
       throw error;
     }

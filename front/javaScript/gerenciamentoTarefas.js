@@ -19,8 +19,8 @@ $(document).ready(async function () {
     try {
       const response=await axios.get(`${localStorage.getItem("ipApi")}listarTarefas`);
       const tasks = response.data.tarefas;
-      console.log(response);
-      console.log(tasks);
+      // console.log(response);
+      // console.log(tasks);
 
       tasks.forEach((tarefa) => {
         const mappedStatus = statusMapping[tarefa.status?.toLowerCase()];
@@ -43,8 +43,8 @@ $(document).ready(async function () {
           <div class="card-status">
             <select class="status-dropdown" data-id="${tarefa.id_tarefa}">
               <option value="Não Iniciado" ${mappedStatus === "Não Iniciado"? "selected" : ""}>Não Iniciado</option>
-              <option value="Em Desenvolvimento" ${mappedStatus === "Em Desenvolvimento"? "selected" : ""}></option>
-              <option value="Finalizado" ${mappedStatus === "Finalizado"? "selected" : ""}></option>
+              <option value="Em Desenvolvimento" ${mappedStatus === "Em Desenvolvimento"? "selected" : ""}>Em Desenvolvimento</option>
+              <option value="Finalizado" ${mappedStatus === "Finalizado"? "selected" : ""}>Finalizado</option>
             </select>
             <button class="btn-save-status" data-id="${tarefa.id_tarefa}">Salvar</button>
           </div>
@@ -61,13 +61,13 @@ $(document).ready(async function () {
 
   await buscarTarefas();
 
-  $(document).off("submit", "#btn-save-status");
-  $(document).on("submit", "#btn-save-stauts", async function (event) {
-    const taskId = $(this).data(id);
+  $(document).off('click', '.btn-save-status');
+  $(document).on('click', '.btn-save-status', async function (event) {
+    const taskId = $(this).data('id');
     const newStatus = $(`.status-dropdown[data-id='${taskId}']`).val();
 
     try {
-      await axios.put(`${localStorage.getItem("ipApi")}atualizarStatus/${taskId}`, {staus: newStatus});
+      await axios.put(`${localStorage.getItem('ipApi')}atualizarStatus/${taskId}`, {status: newStatus});
       await buscarTarefas();
     } catch (error) {
       console.error("Erro ao atualizar", error)
