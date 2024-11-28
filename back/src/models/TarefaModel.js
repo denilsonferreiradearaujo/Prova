@@ -89,6 +89,27 @@ class Tarefa {
       throw error;
     }
   }
+
+  async atualizarTarefa(id_tarefa) {
+    try {
+      const conn = await connection();
+      const pSql =
+        "UPDATE TAREFA SET id_usuario=?, descricao=?, equipe=?, prioridade=? WHERE id_tarefa=?";
+      const pValues = [
+        this.id_usuario,
+        this.descricao,
+        this.equipe,
+        this.prioridade,
+        id_tarefa,
+      ];
+      const [result] = await conn.query(pSql, pValues);
+      // console.log(result);
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Tarefa;

@@ -53,7 +53,7 @@ export const TarefaController = {
     try {
       const {id} = req.params;
       const tarefas = await Tarefa.deletarTarefa(id);
-      console.log("chegou aqui no tarefa controller deletar tarefa", tarefas)
+      // console.log("chegou aqui no tarefa controller deletar tarefa", tarefas)
       res.json({ tarefas });
     } catch (error) {
       res.json({ message: error });
@@ -61,6 +61,7 @@ export const TarefaController = {
   },
 
   listarTarefa: async (req, res) => {
+    console.log("Console do listar tarefa para edição");
     try {
       const {id} = req.params;
       const tarefa = await Tarefa.listarTarefa(id);
@@ -70,4 +71,22 @@ export const TarefaController = {
       res.json({ message: error });
     }
   },
-};
+
+  atualizarTarefa: async (req, res) => {
+    console.log("Console do editar tarefa");
+    try {
+      const { id } = req.params;
+      const { id_usuario, descricao, equipe, prioridade } = req.body;
+      const tarefa = new Tarefa({ id_usuario, descricao, equipe, prioridade });
+      console.log("Console do atualizar tarefa",tarefa);
+
+      const result = await tarefa.atualizarTarefa(id);
+      console.log("console log do reult atualizar tarefa",result);
+
+      res.json({ result });
+    } catch (error) {
+      res.json({ message: error });
+    }
+  },
+
+}

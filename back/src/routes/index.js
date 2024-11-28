@@ -10,5 +10,6 @@ router.get('/listarTarefas', TarefaController.listarTarefas);
 router.put('/atualizarStatus/:id', TarefaController.atualizarStatus);
 router.delete('/deletarTarefa/:id', TarefaController.deletarTarefa);
 router.get('/listarTarefa/:id', TarefaController.listarTarefa);
+router.put('/atualizarTarefa/:id', TarefaController.atualizarTarefa);
 
 export default router;

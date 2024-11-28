@@ -75,8 +75,6 @@ $(document).ready(async function () {
     }
   })
 
-  await deletarTarefa();
-
   $(document).off('click', '.btn-delete');
   $(document).on('click', '.btn-delete', async function (event) {
     const taskId = $(this).data('id');
@@ -86,6 +84,7 @@ $(document).ready(async function () {
       await axios.delete(`${localStorage.getItem('ipApi')}deletarTarefa/${taskId}`, {status: newStatus})
       .then(response =>{
         alert("Tarefa excluida")
+        buscarTarefas();
       }).catch(error =>{
 
       })
